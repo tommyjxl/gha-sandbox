@@ -17,7 +17,6 @@ jobs:
       - name: Create new tag
         id: create_tag
         env:
-          PAT_TOKEN: ${{ secrets.GHA_SANDBOX_GITHUB_TOKEN }}
           GITHUB_TOKEN: ${{ github.token }}
         run: |
           new_tag="latest"
