@@ -1,6 +1,10 @@
-name: Main
+name: Push Release Notes
 
-on: push
+on:
+  workflow_run:
+    workflows: ["Auto Tag"]
+    types:
+      - completed
 
 jobs:
   build:

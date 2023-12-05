@@ -1,0 +1,22 @@
+name: Auto Tag
+
+on:
+  push:
+    branches-ignore:
+      - '*'
+
+jobs:
+  auto_tag:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Create new tag
+        id: create_tag
+        run: |
+          new_tag="latest"
+          echo "::set-output name=tag::$new_tag"
+          git tag $new_tag -f
+          git push origin $new_tag -f
