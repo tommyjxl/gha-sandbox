@@ -25,7 +25,9 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # if you don't want to set write permissions use a PAT token
         WITH_V: true
         PRERELEASE_SUFFIX: null
-        MINOR_STRING_TOKEN: null
-        PATCH_STRING_TOKEN: null
-        NONE_STRING_TOKEN: null
 
+    - name: push "latest" tag
+      uses: anothrNick/github-tag-action@1.64.0
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        CUSTOM_TAG: latest
