@@ -38,3 +38,4 @@ jobs:
           #   qa-team
           # milestone: 1
           draft: false
+          repository: tommyjxl/gha-workflow
