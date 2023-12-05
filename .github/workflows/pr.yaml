@@ -5,6 +5,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.API_TOKEN_GITHUB }}
+          repository: tommyjxl/gha-workflow
 
       - name: Make changes to pull request
         run: date +%s > report.txt
@@ -38,4 +41,3 @@ jobs:
           #   qa-team
           # milestone: 1
           draft: false
-          repository: tommyjxl/gha-workflow
