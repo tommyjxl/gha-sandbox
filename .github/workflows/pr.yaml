@@ -1,4 +1,5 @@
 # https://github.com/peter-evans/create-pull-request
+on: push
 jobs:
   createPullRequest:
     runs-on: ubuntu-latest
