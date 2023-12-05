@@ -26,8 +26,13 @@ jobs:
         WITH_V: true
         PRERELEASE_SUFFIX: null
 
-    - name: push "latest" tag
+    - uses: actions/checkout@v3
+      with:
+        ref: ${{ github.event.pull_request.merge_commit_sha }}
+        fetch-depth: '0'
+
+    - name: Push "latest" tag
       uses: anothrNick/github-tag-action@1.64.0
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        CUSTOM_TAG: latest
+        CUSTOM_TAG: "latest"

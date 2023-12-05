@@ -1,16 +1,16 @@
 name: Push Release Notes
 
-# on:
-#   workflow_run:
-#     workflows: ["Tag"]
-#     types:
-#       - completed
-
 on:
-  push:
-    tags:
-      - "v*"
-      - "latest"
+  workflow_run:
+    workflows: ["Tag"]
+    types:
+      - completed
+
+# on:
+#   push:
+#     tags:
+#       - "v*"
+#       - "latest"
 
 jobs:
   build:
