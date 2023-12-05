@@ -18,7 +18,7 @@ jobs:
         destination_repo: 'tommyjxl/gha-workflow'
         # destination_folder: 'folder-name'
         destination_base_branch: 'main'
-        # destination_head_branch: 'main'
+        destination_head_branch: 'my-automated-branch'
         user_email: 'tommy.jxl@gmail.com'
         user_name: 'tommyjxl'
         pull_request_reviewers: 'reviewers'
