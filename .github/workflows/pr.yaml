@@ -18,7 +18,8 @@ jobs:
           committer: GitHub <noreply@github.com>
           author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
           signoff: false
-          branch: ${{ github.ref_name }}
+          # branch: ${{ github.ref_name }}
+          branch: my_automated_branch
           delete-branch: true
           title: '[Example] Update report'
           body: |
