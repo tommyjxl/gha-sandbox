@@ -23,7 +23,7 @@ jobs:
       id: bump_and_push_tag
       uses: anothrNick/github-tag-action@1.64.0 # Don't use @master or @v1 unless you're happy to test the latest version
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # if you don't want to set write permissions use a PAT token
+        GITHUB_TOKEN: ${{ secrets.ATTRIBUTE_PUBLISHER_GITHUB_ACTIONS_TOKEN }}
         WITH_V: true
         PRERELEASE_SUFFIX: null
         DRY_RUN: false
@@ -38,7 +38,7 @@ jobs:
       if: success()
       uses: peter-evans/repository-dispatch@v1
       with:
-        token: ${{ secrets.API_TOKEN_GITHUB }}
+        token: ${{ secrets.ATTRIBUTE_PUBLISHER_GITHUB_ACTIONS_TOKEN }}
         repository: ${{ github.repository }}
         event-type: trigger-release-workflow
         client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}", "part": "${{ steps.bump_and_push_tag.outputs.part }}", "new_tag": "${{ steps.bump_and_push_tag.outputs.new_tag }}"}'
