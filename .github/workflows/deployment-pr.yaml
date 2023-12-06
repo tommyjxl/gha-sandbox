@@ -22,11 +22,12 @@ jobs:
         run: date +%s > report.txt
 
       - name: Format Tag
+        id: format_tag
         run: |
           tag="${{ github.event.client_payload.tag }}"
           formatted_tag="${tag//.}"
           echo "Formatted tag: $formatted_tag"
-          echo "##[set-env name=FORMATTED_TAG]$formatted_tag"
+          echo "::set-output name=formatted_tag::$formatted_tag"
 
       - name: Create Pull Request
         id: cpr
@@ -37,7 +38,7 @@ jobs:
           committer: GitHub <noreply@github.com>
           author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
           signoff: false
-          branch: release-${{ env.FORMATTED_TAG }}-${{ github.actor }}-${{ github.ref_name }}-${{ github.run_id }}-${{ github.run_number }}-${{ github.run_attempt }}
+          branch: release-${{ steps.format_tag.outputs.formatted_tag }}-${{ github.actor }}-${{ github.ref_name }}-${{ github.run_id }}-${{ github.run_number }}-${{ github.run_attempt }}
           delete-branch: true
           title: 'Deployment requested by Attribute Publisher: GitHub Release ${{ github.event.client_payload.part }} version bumped to ${{ github.event.client_payload.new_tag }}'
           body: |
