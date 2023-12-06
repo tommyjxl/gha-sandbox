@@ -12,6 +12,12 @@ jobs:
           token: ${{ secrets.API_TOKEN_GITHUB }}
           repository: tommyjxl/gha-workflow
 
+      - name: Build
+        run: echo ${{ github.event.client_payload.tag }} > ReleaseTag.txt
+
+      - name: Test
+        run: cat ReleaseTag.txt
+
       - name: Make changes to pull request
         run: date +%s > report.txt
 
@@ -24,9 +30,9 @@ jobs:
           committer: GitHub <noreply@github.com>
           author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
           signoff: false
-          branch: ${{ github.actor }}-${{ github.ref_name }}-${{ github.run_id }}-${{ github.run_number }}-${{ github.run_attempt }}
+          branch: release-${{ github.event.client_payload.tag }}-${{ github.actor }}-${{ github.ref_name }}-${{ github.run_id }}-${{ github.run_number }}-${{ github.run_attempt }}
           delete-branch: true
-          title: 'NOREF Deployment PR triggered by Attribute Publisher (Run ID = ${{ github.run_id }}, Run Number = ${{ github.run_number }}, Run Attempt = ${{ github.run_attempt }}'
+          title: 'NOREF Deployment PR triggered by Attribute Publisher, GitHub Release Tag = ${{ github.event.client_payload.tag }} (Run ID = ${{ github.run_id }}, Run Number = ${{ github.run_number }}, Run Attempt = ${{ github.run_attempt }})'
           body: |
             Update report
             - Updated with *today's* date
