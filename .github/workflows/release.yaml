@@ -1,15 +1,17 @@
 name: Push Release Notes
 
+on:
+  repository_dispatch:
+    types: [trigger-release-workflow]
+  push:
+    tags:
+      - "**"
+
 # on:
 #   workflow_run:
 #     workflows: ["Tag"]
 #     types:
 #       - completed
-
-# on:
-#   push:
-#     tags:
-#       - "**"
 
 # on:
 #   push:
@@ -34,6 +36,14 @@ jobs:
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: ${{ steps.bump_and_push_tag.outputs.new_tag }}
+          tag_name: ${{ github.event.client_payload.new_tag }}
           generate_release_notes: true
 
+      - name: Trigger deployment PR workflow
+        if: success()
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          token: ${{ secrets.API_TOKEN_GITHUB }}
+          repository: ${{ github.repository }}
+          event-type: trigger-deployment-pr-workflow
+          client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}", "tag": "${{ github.event.client_payload.new_tag }}"}'
