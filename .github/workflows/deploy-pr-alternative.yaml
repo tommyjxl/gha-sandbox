@@ -1,0 +1,25 @@
+# # https://github.com/haiiliin/action-pull-request-another-repo
+# name: Push File
+
+# on: push
+
+# jobs:
+#   pull-request:
+#     runs-on: ubuntu-latest
+#     steps:
+#     - name: Checkout
+#       uses: actions/checkout@v2
+
+#     - name: Create pull request
+#       uses: haiiliin/action-pull-request-another-repo@v1.0.3
+#       env:  
+#         API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+#       with:
+#         source_folder: 'src'
+#         destination_repo: 'tommyjxl/gha-workflow'
+#         # destination_folder: 'folder-name'
+#         destination_base_branch: 'main'
+#         destination_head_branch: 'my-automated-branch'
+#         user_email: 'tommy.jxl@gmail.com'
+#         user_name: 'tommyjxl'
+#         pull_request_reviewers: 'reviewers'
