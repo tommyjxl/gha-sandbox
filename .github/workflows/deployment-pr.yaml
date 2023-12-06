@@ -24,7 +24,7 @@ jobs:
       - name: Format Tag
         id: format_tag
         run: |
-          tag="${{ github.event.client_payload.tag }}"
+          tag="${{ github.event.client_payload.new_tag }}"
           formatted_tag="${tag//.}"
           echo "Formatted tag: $formatted_tag"
           echo "::set-output name=formatted_tag::$formatted_tag"
