@@ -39,13 +39,3 @@ jobs:
       with:
         tag_name: ${{ steps.bump_and_push_tag.outputs.new_tag }}
         generate_release_notes: true
-
-    - name: Trigger release workflow
-      if: success()
-      uses: peter-evans/repository-dispatch@v1
-      with:
-        token: ${{ secrets.API_TOKEN_GITHUB }}
-        repository: ${{ github.repository }}
-        event-type: trigger-release-workflow
-        client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
-

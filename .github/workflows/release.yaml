@@ -12,9 +12,9 @@ name: Push Release Notes
 #       - "**"
 
 on:
-  repository_dispatch:
-    types: [trigger-release-workflow]
-
+  push:
+    tags:
+      - "**"
 
 jobs:
   build:
@@ -41,7 +41,7 @@ jobs:
 
       - name: Trigger deploy PR workflow
         if: success()
-        uses: peter-evans/repository-dispatch@v1
+        uses: peter-evans/repository-dispatch@v2
         with:
           token: ${{ secrets.API_TOKEN_GITHUB }}
           repository: ${{ github.repository }}
