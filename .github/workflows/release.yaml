@@ -36,7 +36,7 @@ jobs:
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
-          token: ${{ secrets.API_TOKEN_GITHUB }}
+          token: ${{ secrets.ATTRIBUTE_PUBLISHER_GITHUB_ACTIONS_TOKEN }}
           tag_name: ${{ github.event.client_payload.new_tag }}
           generate_release_notes: true
 
@@ -44,7 +44,7 @@ jobs:
         if: success()
         uses: peter-evans/repository-dispatch@v1
         with:
-          token: ${{ secrets.API_TOKEN_GITHUB }}
+          token: ${{ secrets.ATTRIBUTE_PUBLISHER_GITHUB_ACTIONS_TOKEN }}
           repository: ${{ github.repository }}
           event-type: trigger-deployment-pr-workflow
           client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}", "part": "${{ github.event.client_payload.part }}", "new_tag": "${{ github.event.client_payload.new_tag }}"}'

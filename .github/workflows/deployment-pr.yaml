@@ -9,7 +9,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          token: ${{ secrets.API_TOKEN_GITHUB }}
+          token: ${{ secrets.ATTRIBUTE_PUBLISHER_GITHUB_ACTIONS_TOKEN }}
           repository: tommyjxl/gha-workflow
 
       - name: Build
@@ -25,7 +25,7 @@ jobs:
         id: cpr
         uses: peter-evans/create-pull-request@v5
         with:
-          token: ${{ secrets.API_TOKEN_GITHUB }}
+          token: ${{ secrets.ATTRIBUTE_PUBLISHER_GITHUB_ACTIONS_TOKEN }}
           commit-message: bump deployment version
           committer: GitHub <noreply@github.com>
           author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
@@ -41,7 +41,7 @@ jobs:
               - What's changed: https://github.com/deliveryhero/data-cdp-attribs-conf/releases/tag/${{ github.event.client_payload.new_tag }}
 
             - Debug Info
-              - Run ID: ${{ github.run_id }}
+              - GitHub Action Run: https://github.com/deliveryhero/data-cdp-attribs-conf/actions/runs/${{ github.run_id }}  
               - Run Number: ${{ github.run_number }}
               - Run Attempt: ${{ github.run_attempt }}
 
