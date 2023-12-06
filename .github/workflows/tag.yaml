@@ -36,7 +36,7 @@ jobs:
 
     - name: Trigger GitHub Release
       if: success()
-      uses: peter-evans/repository-dispatch@v1
+      uses: peter-evans/repository-dispatch@v2
       with:
         token: ${{ secrets.ATTRIBUTE_PUBLISHER_GITHUB_ACTIONS_TOKEN }}
         repository: ${{ github.repository }}
