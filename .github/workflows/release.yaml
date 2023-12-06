@@ -45,5 +45,5 @@ jobs:
         with:
           token: ${{ secrets.API_TOKEN_GITHUB }}
           repository: ${{ github.repository }}
-          event-type: trigger-deploy-pr-workflow
+          event-type: trigger-deployment-pr-workflow
           client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
