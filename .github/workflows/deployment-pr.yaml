@@ -32,13 +32,19 @@ jobs:
           signoff: false
           branch: release-${{ github.event.client_payload.tag }}-${{ github.actor }}-${{ github.ref_name }}-${{ github.run_id }}-${{ github.run_number }}-${{ github.run_attempt }}
           delete-branch: true
-          title: 'Automated PR created by Attribute Publisher: GitHub Release ${{ github.event.client_payload.tag }} -> ${{ github.event.client_payload.new_tag }}'
+          title: 'Deployment requested by Attribute Publisher: GitHub Release ${{ github.event.client_payload.part }} version bumped to ${{ github.event.client_payload.new_tag }}'
           body: |
-            Deployment PR triggered by Attribute Publisher
-            - GitHub Release version was upgraded: ${{ github.event.client_payload.tag }} -> ${{ github.event.client_payload.new_tag }}
-            - Run ID: ${{ github.run_id }}
-            - Run Number: ${{ github.run_number }}
-            - Run Attempt: ${{ github.run_attempt }})
+            Deployment requested by [Attribute Publisher](https://github.com/deliveryhero/data-cdp-attribs-conf)
+            
+            - Release Info
+              - GitHub release ${{ github.event.client_payload.part }} version bumped to: ${{ github.event.client_payload.new_tag }}
+              - What's changed: https://github.com/deliveryhero/data-cdp-attribs-conf/releases/tag/${{ github.event.client_payload.new_tag }}
+
+            - Debug Info
+              - Run ID: ${{ github.run_id }}
+              - Run Number: ${{ github.run_number }}
+              - Run Attempt: ${{ github.run_attempt }}
+
           labels: |
             automated
             attribute_publisher
