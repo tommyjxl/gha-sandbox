@@ -47,4 +47,4 @@ jobs:
           token: ${{ secrets.API_TOKEN_GITHUB }}
           repository: ${{ github.repository }}
           event-type: trigger-deployment-pr-workflow
-          client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}", "tag": "${{ github.event.client_payload.new_tag }}"}'
+          client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}", "tag": "${{ github.event.client_payload.tag }}", "new_tag": "${{ github.event.client_payload.new_tag }}"}'
