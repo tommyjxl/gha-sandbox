@@ -34,7 +34,7 @@ jobs:
     - name: Test
       run: cat dummy.txt
 
-    - name: Release
+    - name: Create GitHub Release
       uses: softprops/action-gh-release@v1
       with:
         tag_name: ${{ steps.bump_and_push_tag.outputs.new_tag }}

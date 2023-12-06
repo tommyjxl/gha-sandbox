@@ -24,9 +24,9 @@ jobs:
           committer: GitHub <noreply@github.com>
           author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
           signoff: false
-          branch: ${{ github.actor }}-${{ github.ref_name }}-auto
+          branch: ${{ github.actor }}-${{ github.ref_name }}-${{ github.run_id }}-${{ github.run_number }}-${{ github.run_attempt }}
           delete-branch: true
-          title: 'NOREF Deployment PR triggered by Attribute Publisher'
+          title: 'NOREF Deployment PR triggered by Attribute Publisher (Run ID = ${{ github.run_id }}, Run Number = ${{ github.run_number }}, Run Attempt = ${{ github.run_attempt }}'
           body: |
             Update report
             - Updated with *today's* date
