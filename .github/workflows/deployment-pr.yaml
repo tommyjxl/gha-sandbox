@@ -21,6 +21,13 @@ jobs:
       - name: Bump deployment version
         run: date +%s > report.txt
 
+      - name: Format Tag
+        run: |
+          tag="${{ github.event.client_payload.tag }}"
+          formatted_tag="${tag//.}"
+          echo "Formatted tag: $formatted_tag"
+          echo "##[set-env name=FORMATTED_TAG]$formatted_tag"
+
       - name: Create Pull Request
         id: cpr
         uses: peter-evans/create-pull-request@v5
@@ -30,7 +37,7 @@ jobs:
           committer: GitHub <noreply@github.com>
           author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
           signoff: false
-          branch: release-${{ github.event.client_payload.tag }}-${{ github.actor }}-${{ github.ref_name }}-${{ github.run_id }}-${{ github.run_number }}-${{ github.run_attempt }}
+          branch: release-${{ env.FORMATTED_TAG }}-${{ github.actor }}-${{ github.ref_name }}-${{ github.run_id }}-${{ github.run_number }}-${{ github.run_attempt }}
           delete-branch: true
           title: 'Deployment requested by Attribute Publisher: GitHub Release ${{ github.event.client_payload.part }} version bumped to ${{ github.event.client_payload.new_tag }}'
           body: |
