@@ -3,9 +3,9 @@ name: Push Release Notes
 on:
   repository_dispatch:
     types: [trigger-release-workflow]
-  push:
-    tags:
-      - "**"
+  # push:
+  #   tags:
+  #     - "**"
 
 # on:
 #   workflow_run:
