@@ -29,13 +29,22 @@ jobs:
         DRY_RUN: false
 
     - name: Build
-      run: echo ${{ github.sha }} > Release.txt
+      run: echo ${{ github.sha }} > dummy.txt
 
     - name: Test
-      run: cat Release.txt
+      run: cat dummy.txt
 
     - name: Release
       uses: softprops/action-gh-release@v1
       with:
         tag_name: ${{ steps.bump_and_push_tag.outputs.new_tag }}
         generate_release_notes: true
+
+    - name: Trigger deployment PR workflow
+      if: success()
+      uses: peter-evans/repository-dispatch@v1
+      with:
+        token: ${{ secrets.API_TOKEN_GITHUB }}
+        repository: ${{ github.repository }}
+        event-type: trigger-deployment-pr-workflow
+        client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
