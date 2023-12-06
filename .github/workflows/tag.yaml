@@ -41,4 +41,4 @@ jobs:
         token: ${{ secrets.API_TOKEN_GITHUB }}
         repository: ${{ github.repository }}
         event-type: trigger-release-workflow
-        client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}", "new_tag": "${{ steps.bump_and_push_tag.outputs.new_tag }}"}'
+        client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}", "tag": "${{ steps.bump_and_push_tag.outputs.tag }}", "new_tag": "${{ steps.bump_and_push_tag.outputs.new_tag }}"}'
