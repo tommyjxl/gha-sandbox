@@ -36,8 +36,8 @@ jobs:
           labels: |
             automated
             attribute_publisher
-          assignees: tommyjxl
-          reviewers: tommyjxl
+          # assignees: tommyjxl
+          # reviewers: tommyjxl
           # team-reviewers: |
           #   developers
           #   qa-team
