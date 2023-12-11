@@ -45,5 +45,5 @@ jobs:
     with:
       ref: ${{ github.ref }}
       sha: ${{ github.sha }}
-      part: ${{ steps.bump_and_push_tag.outputs.part }}
-      new_tag: ${{ steps.bump_and_push_tag.outputs.new_tag }}
+      part: ${{ jobs.build.steps.bump_and_push_tag.outputs.part }}
+      new_tag: ${{ jobs.build.steps.bump_and_push_tag.outputs.new_tag }}
