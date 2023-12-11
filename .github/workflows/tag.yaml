@@ -13,6 +13,12 @@ jobs:
     runs-on: ubuntu-22.04
     permissions:
       contents: write
+    outputs:
+      ref: ${{ github.ref }}
+      sha: ${{ github.sha }}
+      part: ${{ steps.bump_and_push_tag.outputs.part }}
+      new_tag: ${{ steps.bump_and_push_tag.outputs.new_tag }}
+
     steps:
     - uses: actions/checkout@v4
       with:
@@ -39,7 +45,7 @@ jobs:
     needs: [ build ]
     if: contains(needs.*.result, 'success')
     with:
-      ref: ${{ github.ref }}
-      sha: ${{ github.sha }}
-      part: ${{ build.steps.bump_and_push_tag.outputs.part }}
-      new_tag: ${{ build.steps.bump_and_push_tag.outputs.new_tag }}
+      ref: ${{ needs.build.outputs.ref }}
+      sha: ${{ needs.build.outputs.sha }}
+      part: ${{ needs.build.outputs.part }}
+      new_tag: ${{ needs.build.outputs.new_tag }}
