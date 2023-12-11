@@ -13,6 +13,10 @@ on:
       new_tag:
         required: true
         type: string
+    secrets:
+      ATTRIBUTE_PUBLISHER_GITHUB_ACTIONS_TOKEN:
+        required: true
+
 jobs:
   # https://github.com/peter-evans/create-pull-request
   createPullRequest:

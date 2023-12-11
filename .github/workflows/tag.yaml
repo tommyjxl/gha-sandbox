@@ -49,3 +49,5 @@ jobs:
       sha: ${{ needs.build.outputs.sha }}
       part: ${{ needs.build.outputs.part }}
       new_tag: ${{ needs.build.outputs.new_tag }}
+    secrets:
+      ATTRIBUTE_PUBLISHER_GITHUB_ACTIONS_TOKEN: ${{ secrets.ATTRIBUTE_PUBLISHER_GITHUB_ACTIONS_TOKEN }}
