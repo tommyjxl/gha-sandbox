@@ -15,6 +15,9 @@ on:
       new_tag:
         required: true
         type: string
+    secrets:
+      ATTRIBUTE_PUBLISHER_GITHUB_ACTIONS_TOKEN:
+        required: true
 
 jobs:
   build:
@@ -48,3 +51,5 @@ jobs:
       sha: ${{ inputs.sha }}
       part: ${{ inputs.part }}
       new_tag: ${{ inputs.new_tag }}
+    secrets:
+      ATTRIBUTE_PUBLISHER_GITHUB_ACTIONS_TOKEN: ${{ secrets.ATTRIBUTE_PUBLISHER_GITHUB_ACTIONS_TOKEN }}
