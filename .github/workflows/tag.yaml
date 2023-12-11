@@ -34,11 +34,12 @@ jobs:
     - name: Test
       run: cat Tag.txt
 
-    - name: Trigger GitHub Release
-      if: success()
-      uses: peter-evans/repository-dispatch@v2
-      with:
-        token: ${{ secrets.ATTRIBUTE_PUBLISHER_GITHUB_ACTIONS_TOKEN }}
-        repository: ${{ github.repository }}
-        event-type: trigger-release-workflow
-        client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}", "part": "${{ steps.bump_and_push_tag.outputs.part }}", "new_tag": "${{ steps.bump_and_push_tag.outputs.new_tag }}"}'
+  push-release:
+    uses: tommyjxl/gha-sandbox/.github/workflows/release.yaml@tag-and-release
+    needs: [ build ]
+    if: contains(needs.*.result, 'success')
+    with:
+      ref: ${{ github.ref }}
+      sha: ${{ github.sha }}
+      part: ${{ steps.bump_and_push_tag.outputs.part }}
+      new_tag: ${{ steps.bump_and_push_tag.outputs.new_tag }}
