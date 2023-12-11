@@ -1,22 +1,20 @@
 name: Push Release Notes
 
 on:
-  repository_dispatch:
-    types: [trigger-release-workflow]
-  # push:
-  #   tags:
-  #     - "**"
-
-# on:
-#   workflow_run:
-#     workflows: ["Tag"]
-#     types:
-#       - completed
-
-# on:
-#   push:
-#     tags:
-#       - "**"
+  workflow_call:
+    inputs:
+      ref:
+        required: true
+        type: string
+      sha:
+        required: true
+        type: string
+      part:
+        required: true
+        type: string
+      new_tag:
+        required: true
+        type: string
 
 jobs:
   build:
@@ -25,10 +23,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.client_payload.sha }}  # checkout the same code from prior workflow
+          ref: ${{ inputs.sha }}  # checkout the same code from prior workflow
 
       - name: Build
-        run: echo ${{ github.sha }} > Release.txt
+        run: echo ${{ inputs.sha }} > Release.txt
 
       - name: Test
         run: cat Release.txt
@@ -37,14 +35,15 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           token: ${{ secrets.ATTRIBUTE_PUBLISHER_GITHUB_ACTIONS_TOKEN }}
-          tag_name: ${{ github.event.client_payload.new_tag }}
+          tag_name: ${{ inputs.new_tag }}
           generate_release_notes: true
 
-      - name: Trigger deployment PR workflow
-        if: success()
-        uses: peter-evans/repository-dispatch@v2
-        with:
-          token: ${{ secrets.ATTRIBUTE_PUBLISHER_GITHUB_ACTIONS_TOKEN }}
-          repository: ${{ github.repository }}
-          event-type: trigger-deployment-pr-workflow
-          client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}", "part": "${{ github.event.client_payload.part }}", "new_tag": "${{ github.event.client_payload.new_tag }}"}'
+  push-deployment-pr:
+    uses: tommyjxl/gha-sandbox/.github/workflows/deployment-pr.yaml@tag-and-release
+    needs: [ build ]
+    if: contains(needs.*.result, 'success')
+    with:
+      ref: ${{ github.ref }}
+      sha: ${{ github.sha }}
+      part: ${{ steps.bump_and_push_tag.outputs.part }}
+      new_tag: ${{ steps.bump_and_push_tag.outputs.new_tag }}

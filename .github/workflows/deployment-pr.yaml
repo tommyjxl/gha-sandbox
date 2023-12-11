@@ -1,7 +1,18 @@
 on:
-  repository_dispatch:
-    types: [trigger-deployment-pr-workflow]
-
+  workflow_call:
+    inputs:
+      ref:
+        required: true
+        type: string
+      sha:
+        required: true
+        type: string
+      part:
+        required: true
+        type: string
+      new_tag:
+        required: true
+        type: string
 jobs:
   # https://github.com/peter-evans/create-pull-request
   createPullRequest:
@@ -13,7 +24,7 @@ jobs:
           repository: tommyjxl/gha-workflow
 
       - name: Build
-        run: echo ${{ github.event.client_payload.tag }} > ReleaseTag.txt
+        run: echo ${{ inputs.new_tag }} > ReleaseTag.txt
 
       - name: Test
         run: cat ReleaseTag.txt
@@ -24,7 +35,7 @@ jobs:
       - name: Format Tag
         id: format_tag
         run: |
-          tag="${{ github.event.client_payload.new_tag }}"
+          tag="${{ inputs.new_tag }}"
           formatted_tag="${tag//.}"
           echo "Formatted tag: $formatted_tag"
           echo "formatted_tag=$formatted_tag" >> $GITHUB_OUTPUT
@@ -40,13 +51,13 @@ jobs:
           signoff: false
           branch: release-${{ steps.format_tag.outputs.formatted_tag }}-${{ github.actor }}-${{ github.ref_name }}-${{ github.run_id }}-${{ github.run_number }}-${{ github.run_attempt }}
           delete-branch: true
-          title: 'Deployment requested by Attribute Publisher: GitHub Release ${{ github.event.client_payload.part }} version bumped to ${{ github.event.client_payload.new_tag }}'
+          title: 'Deployment requested by Attribute Publisher: GitHub Release ${{ inputs.part }} version bumped to ${{ inputs.new_tag }}'
           body: |
             Deployment requested by [Attribute Publisher](https://github.com/deliveryhero/data-cdp-attribs-conf)
             
             - Release Info
-              - GitHub release ${{ github.event.client_payload.part }} version bumped to: ${{ github.event.client_payload.new_tag }}
-              - What's changed: https://github.com/deliveryhero/data-cdp-attribs-conf/releases/tag/${{ github.event.client_payload.new_tag }}
+              - GitHub release ${{ inputs.part }} version bumped to: ${{ inputs.new_tag }}
+              - What's changed: https://github.com/deliveryhero/data-cdp-attribs-conf/releases/tag/${{ inputs.new_tag }}
 
             - Debug Info
               - GitHub Action Run: https://github.com/deliveryhero/data-cdp-attribs-conf/actions/runs/${{ github.run_id }}  
